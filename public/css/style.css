@@ -1,0 +1,85 @@
+ 
+/* Custom styles */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Header styles */
+.navbar-brand {
+    font-weight: 700;
+}
+
+/* Product card styles */
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: contain;
+    padding: 1rem;
+}
+
+/* Price formatting */
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+/* Footer styles */
+footer {
+    margin-top: auto;
+}
+
+/* Product detail page */
+.product-image-container img {
+    max-height: 400px;
+    object-fit: contain;
+}
+
+/* Cart page */
+.table img {
+    max-width: 80px;
+    height: auto;
+}
+
+/* Rating stars */
+.bi-star-fill, .bi-star-half, .bi-star {
+    color: #ccc;
+    cursor: pointer;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+}
+
+/* Alert message */
+.alert {
+    z-index: 1050;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-img-top {
+        height: 160px;
+    }
+    
+    .product-image-container img {
+        max-height: 300px;
+    }
+}

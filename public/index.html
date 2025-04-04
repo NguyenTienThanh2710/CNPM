@@ -1,0 +1,105 @@
+ 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Computer Store - Trang chủ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Header sẽ được tải bằng JavaScript -->
+    <div id="header-container"></div>
+
+    <main class="container my-4">
+        <!-- Hero Banner -->
+        <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+            <div class="col-md-6 px-0">
+                <h1 class="display-4 fw-bold">New Computer Store</h1>
+                <p class="lead my-3">Chào mừng đến với cửa hàng máy tính chuyên nghiệp, nơi cung cấp các thiết bị, phụ kiện công nghệ chính hãng với giá tốt nhất thị trường.</p>
+                <p class="lead mb-0"><a href="#featured-products" class="text-white fw-bold">Khám phá ngay!</a></p>
+            </div>
+        </div>
+
+        <!-- Featured Categories -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="border-bottom pb-2">Danh mục nổi bật</h2>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-laptop fs-1 text-primary"></i>
+                        <h5 class="card-title mt-3">Laptop</h5>
+                        <p class="card-text">Các dòng laptop mới nhất với đầy đủ phân khúc từ học tập, văn phòng đến gaming, đồ họa</p>
+                        <a href="#" class="btn btn-outline-primary">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-pc-display fs-1 text-success"></i>
+                        <h5 class="card-title mt-3">PC & Máy tính</h5>
+                        <p class="card-text">PC đồng bộ, máy tính để bàn với cấu hình mạnh mẽ, đáp ứng mọi nhu cầu</p>
+                        <a href="#" class="btn btn-outline-success">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-mouse3 fs-1 text-danger"></i>
+                        <h5 class="card-title mt-3">Gaming Gear</h5>
+                        <p class="card-text">Các thiết bị gaming chuyên dụng từ những thương hiệu hàng đầu thế giới</p>
+                        <a href="#" class="btn btn-outline-danger">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Products -->
+        <section id="featured-products" class="mb-4">
+            <h2 class="border-bottom pb-2">Sản phẩm nổi bật</h2>
+            <div class="row product-list">
+                <!-- Products will be loaded by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Promotions -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="border-bottom pb-2">Khuyến mãi</h2>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Giảm ngay 10% cho đơn hàng đầu tiên</h5>
+                        <p class="card-text">Áp dụng mã <strong>WELCOME10</strong> để nhận ưu đãi</p>
+                        <a href="#" class="btn btn-primary">Mua ngay</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Miễn phí vận chuyển toàn quốc</h5>
+                        <p class="card-text">Cho đơn hàng từ 2 triệu đồng</p>
+                        <a href="#" class="btn btn-primary">Xem thêm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer sẽ được tải bằng JavaScript -->
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/products-api.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>
