@@ -1,4 +1,4 @@
- // Lấy danh sách sản phẩm
+// Lấy danh sách sản phẩm
 async function fetchProducts() {
     try {
         const response = await fetch('/api/products');
@@ -44,21 +44,21 @@ function displayProducts(products, containerSelector = '.product-list') {
     
     products.forEach(product => {
         const productCard = document.createElement('div');
-        productCard.className = 'col-md-4 col-sm-6 mb-4';
+        productCard.className = 'col-md-4 col-sm-6 mb-4 product-card';
         productCard.innerHTML = `
             <div class="card h-100">
-                <img src="${product.image || '/images/product-placeholder.jpg'}" class="card-img-top" alt="${product.name}">
+                <img src="${product.image || '/images/product-placeholder.jpg'}" class="card-img-top product-image" alt="${product.name}">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">${product.name}</h5>
+                    <h5 class="card-title product-name">${product.name}</h5>
                     <p class="card-text text-truncate">${product.description}</p>
                     <div class="mt-auto">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-bold text-primary">${formatCurrency(product.price)}</span>
+                            <span class="fw-bold text-primary product-price" data-price="${product.price}">${formatCurrency(product.price)}</span>
                             <span class="badge bg-success">Còn hàng</span>
                         </div>
                         <div class="d-grid gap-2">
                             <a href="/product-detail.html?id=${product.id}" class="btn btn-outline-primary">Xem chi tiết</a>
-                            <button class="btn btn-primary add-to-cart-btn" data-product-id="${product.id}">
+                            <button class="btn btn-primary add-to-cart-btn" data-product-id="${product.id}" onclick="addToCart('${product.id}')">
                                 <i class="bi bi-cart-plus"></i> Thêm vào giỏ
                             </button>
                         </div>
@@ -67,14 +67,6 @@ function displayProducts(products, containerSelector = '.product-list') {
             </div>
         `;
         container.appendChild(productCard);
-    });
-    
-    // Thêm sự kiện cho nút "Thêm vào giỏ"
-    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const productId = this.getAttribute('data-product-id');
-            addToCart(productId);
-        });
     });
 }
 
