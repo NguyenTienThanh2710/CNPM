@@ -2,6 +2,29 @@ const fs = require('fs');
 const path = require('path');
 const productsFile = path.join(__dirname, '../data/products.json');
 
+// Hàm tìm kiếm sản phẩm
+exports.searchProducts = (req, res) => {
+  try {
+    const { q } = req.query;
+    if (!q) {
+      return res.status(200).json(getProducts());
+    }
+
+    const products = getProducts();
+    const searchQuery = q.toLowerCase();
+    
+    const results = products.filter(product => 
+      product.name.toLowerCase().includes(searchQuery) ||
+      product.description.toLowerCase().includes(searchQuery) ||
+      product.category.toLowerCase().includes(searchQuery)
+    );
+
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(500).json({ message: 'Lỗi khi tìm kiếm sản phẩm', error: error.message });
+  }
+};
+
 // Đọc dữ liệu sản phẩm từ file
 const getProducts = () => {
   try {

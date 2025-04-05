@@ -11,9 +11,8 @@ async function loadFeaturedProducts() {
     const products = await fetchProducts();
     
     if (products.length > 0) {
-        // Hiển thị các sản phẩm nổi bật trên trang chủ
-        const featuredProducts = products.slice(0, 6); // Lấy tối đa 6 sản phẩm
-        displayProducts(featuredProducts, '.product-list');
+        // Hiển thị tất cả sản phẩm trên trang chủ
+        displayProducts(products, '.product-list');
     }
 }
 
@@ -22,14 +21,7 @@ function initializeEvents() {
     // Xử lý sự kiện tìm kiếm
     const searchForm = document.querySelector('form');
     if (searchForm) {
-        searchForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const searchInput = document.querySelector('input[type="search"]');
-            if (searchInput && searchInput.value.trim()) {
-                // Chuyển hướng đến trang tìm kiếm với tham số query
-                window.location.href = `/search.html?q=${encodeURIComponent(searchInput.value.trim())}`;
-            }
-        });
+        searchForm.addEventListener('submit', handleSearch);
     }
     
     // Kiểm tra trạng thái đăng nhập và cập nhật UI
@@ -109,50 +101,49 @@ async function handleLogout(e) {
     }
 }
 
-// Hàm thêm sản phẩm vào giỏ hàng - Đã sửa
-function addToCart(productId, quantity = 1) {
+// Hàm thêm sản phẩm vào giỏ hàng
+async function addToCart(productId, quantity = 1) {
     try {
-        // Lấy thông tin sản phẩm từ API hoặc từ dữ liệu đã có
-        fetch('/api/products/' + productId)
-            .then(response => response.json())
-            .then(product => {
-                // Lấy giỏ hàng hiện tại từ localStorage hoặc tạo mới nếu chưa có
-                let cart = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0 };
-                
-                // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
-                const existingItemIndex = cart.items.findIndex(item => item.productId === productId);
-                
-                if (existingItemIndex !== -1) {
-                    // Nếu sản phẩm đã có, tăng số lượng
-                    cart.items[existingItemIndex].quantity += quantity;
-                } else {
-                    // Nếu sản phẩm chưa có, thêm mới
-                    cart.items.push({
-                        id: Date.now().toString(), // ID duy nhất cho item trong giỏ hàng
-                        productId: productId,
-                        name: product.name,
-                        price: product.price,
-                        image: product.image || '/images/product-placeholder.jpg',
-                        quantity: quantity
-                    });
-                }
-                
-                // Tính lại tổng giá trị giỏ hàng
-                cart.total = cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
-                
-                // Lưu giỏ hàng vào localStorage
-                localStorage.setItem('cart', JSON.stringify(cart));
-                
-                // Cập nhật hiển thị số lượng sản phẩm trong giỏ hàng
-                updateCartCount();
-                
-                // Hiển thị thông báo thành công
-                showAlert('Đã thêm sản phẩm vào giỏ hàng!', 'success');
-            })
-            .catch(error => {
-                console.error('Error fetching product details:', error);
-                showAlert('Không thể thêm sản phẩm vào giỏ hàng!', 'danger');
+        // Lấy thông tin sản phẩm từ API
+        const response = await fetch('/api/products/' + productId);
+        if (!response.ok) {
+            throw new Error('Không thể lấy thông tin sản phẩm');
+        }
+        const product = await response.json();
+
+        // Lấy giỏ hàng hiện tại từ localStorage hoặc tạo mới nếu chưa có
+        let cart = JSON.parse(localStorage.getItem('cart')) || { items: [], total: 0 };
+        
+        // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+        const existingItemIndex = cart.items.findIndex(item => item.productId === productId);
+        
+        if (existingItemIndex !== -1) {
+            // Nếu sản phẩm đã có, tăng số lượng
+            cart.items[existingItemIndex].quantity += quantity;
+        } else {
+            // Nếu sản phẩm chưa có, thêm mới
+            cart.items.push({
+                id: Date.now().toString(), // ID duy nhất cho item trong giỏ hàng
+                productId: productId,
+                name: product.name,
+                price: product.price,
+                image: product.image || '/images/product-placeholder.jpg',
+                quantity: quantity
             });
+        }
+        
+        // Tính lại tổng giá trị giỏ hàng
+        cart.total = cart.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+        
+        // Lưu giỏ hàng vào localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        // Cập nhật hiển thị số lượng sản phẩm trong giỏ hàng
+        updateCartCount();
+        
+        // Hiển thị thông báo thành công
+        showAlert('Đã thêm sản phẩm vào giỏ hàng!', 'success');
+
     } catch (error) {
         console.error('Error adding to cart:', error);
         showAlert('Không thể thêm sản phẩm vào giỏ hàng!', 'danger');
@@ -192,4 +183,23 @@ function showAlert(message, type = 'info') {
 // Format tiền tệ
 function formatCurrency(amount) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+}
+
+
+// Xử lý sự kiện submit form tìm kiếm
+function handleSearch(event) {
+    event.preventDefault();
+    const searchForm = document.getElementById('search-form');
+    if (!searchForm) {
+        console.error('Search form not found');
+        return;
+    }
+    
+    const searchQuery = new FormData(searchForm).get('q');
+    if (searchQuery.trim()) {
+        // Thêm category=laptop vào URL nếu người dùng đang tìm laptop
+        const isLaptopSearch = searchQuery.toLowerCase().includes('laptop');
+        const searchUrl = `/search.html?q=${encodeURIComponent(searchQuery.trim())}${isLaptopSearch ? '&category=laptop' : ''}`;
+        window.location.href = searchUrl;
+    }
 }

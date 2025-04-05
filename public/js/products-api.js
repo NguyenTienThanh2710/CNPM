@@ -13,6 +13,21 @@ async function fetchProducts() {
     }
 }
 
+// Tìm kiếm sản phẩm
+async function searchProducts(query) {
+    try {
+        const response = await fetch(`/api/products/search?q=${encodeURIComponent(query)}`);
+        if (!response.ok) {
+            throw new Error('Failed to search products');
+        }
+        const products = await response.json();
+        return products;
+    } catch (error) {
+        console.error('Error searching products:', error);
+        return [];
+    }
+}
+
 // Lấy thông tin chi tiết sản phẩm
 async function fetchProductDetails(productId) {
     try {
