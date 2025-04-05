@@ -15,7 +15,11 @@ async function initializeSearch() {
     const searchParams = getSearchParams();
     
     // Hiển thị từ khóa tìm kiếm
-    document.getElementById('search-query').textContent = searchParams.query;
+    const searchQuery = document.getElementById('search-query');
+    searchQuery.textContent = searchParams.query ? searchParams.query : 'tất cả sản phẩm';
+    
+    // Cập nhật tiêu đề trang tìm kiếm
+    document.title = `Kết quả tìm kiếm: ${searchParams.query || 'Tất cả sản phẩm'} - New Computer Store`;
     
     // Lấy và hiển thị kết quả tìm kiếm
     await performSearch(searchParams);
@@ -81,12 +85,16 @@ function displaySearchResults(products) {
     const noResultsContainer = document.getElementById('no-results');
     const resultCount = document.getElementById('result-count');
     const searchParams = getSearchParams();
+    const searchQuery = searchParams.query;
+    
+    // Cập nhật tiêu đề kết quả tìm kiếm
+    document.getElementById('search-result-title').textContent = searchQuery ? `Kết quả tìm kiếm cho "${searchQuery}"` : 'Tất cả sản phẩm';
     
     if (products.length === 0) {
         resultsContainer.innerHTML = '';
         noResultsContainer.classList.remove('d-none');
         const searchType = searchParams.category.includes('laptop') ? 'laptop' : 'sản phẩm';
-        resultCount.textContent = `Không tìm thấy ${searchType} phù hợp với từ khóa "${searchParams.query}"`;
+        resultCount.textContent = searchQuery ? `Không tìm thấy ${searchType} phù hợp với từ khóa "${searchQuery}"` : `Không tìm thấy ${searchType}`;
         return;
     }
     
