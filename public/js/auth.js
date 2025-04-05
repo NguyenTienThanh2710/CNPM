@@ -37,11 +37,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Hiển thị thông báo thành công
                 showAlert('Đăng nhập thành công!', 'success');
                 
-                // Chuyển hướng đến trang đã lưu hoặc trang chủ
+                // Kiểm tra vai trò người dùng và chuyển hướng phù hợp
                 setTimeout(() => {
-                    const redirectUrl = localStorage.getItem('redirectUrl') || '/';
-                    localStorage.removeItem('redirectUrl');
-                    window.location.href = redirectUrl;
+                    // Nếu người dùng là admin, chuyển hướng đến trang quản trị
+                    if (data.user && data.user.role === 'admin') {
+                        window.location.href = '/admin.html';
+                    } else {
+                        // Nếu không phải admin, chuyển hướng đến trang đã lưu hoặc trang chủ
+                        const redirectUrl = localStorage.getItem('redirectUrl') || '/';
+                        localStorage.removeItem('redirectUrl');
+                        window.location.href = redirectUrl;
+                    }
                 }, 1500);
                 
             } catch (error) {
@@ -128,6 +134,25 @@ async function checkAuthStatus() {
     }
 }
 
+// Kiểm tra quyền admin
+async function checkAdminAccess() {
+    try {
+        // Kiểm tra xem người dùng đã đăng nhập chưa
+        const isAuthenticated = await checkAuthStatus();
+        if (!isAuthenticated) return false;
+        
+        // Kiểm tra vai trò từ thông tin người dùng trong localStorage
+        const userStr = localStorage.getItem('user');
+        if (!userStr) return false;
+        
+        const user = JSON.parse(userStr);
+        return user && user.role === 'admin';
+    } catch (error) {
+        console.error('Lỗi khi kiểm tra quyền admin:', error);
+        return false;
+    }
+}
+
 // Hiển thị thông báo
 function showAlert(message, type = 'info') {
     const alertBox = document.createElement('div');
@@ -146,4 +171,118 @@ function showAlert(message, type = 'info') {
             alertBox.remove();
         }, 300);
     }, 3000);
+}
+
+// Xử lý form yêu cầu đặt lại mật khẩu
+const resetRequestForm = document.getElementById('reset-request-form');
+if (resetRequestForm) {
+    resetRequestForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('reset-email').value;
+        const errorElement = document.getElementById('reset-request-error');
+        const successElement = document.getElementById('reset-request-success');
+        
+        // Ẩn thông báo lỗi và thành công trước khi gửi yêu cầu
+        errorElement.classList.add('d-none');
+        successElement.classList.add('d-none');
+        
+        try {
+            const response = await fetch('/api/auth/forgot-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.message || 'Không thể gửi yêu cầu đặt lại mật khẩu');
+            }
+            
+            // Hiển thị thông báo thành công
+            successElement.textContent = 'Yêu cầu đặt lại mật khẩu đã được gửi. Vui lòng kiểm tra email của bạn.';
+            successElement.classList.remove('d-none');
+            
+            // Lưu email để sử dụng ở bước tiếp theo
+            localStorage.setItem('resetEmail', email);
+            
+            // Hiển thị form xác nhận sau 2 giây
+            setTimeout(() => {
+                document.getElementById('request-reset-container').classList.add('d-none');
+                document.getElementById('confirm-reset-container').classList.remove('d-none');
+            }, 2000);
+            
+        } catch (error) {
+            errorElement.textContent = error.message;
+            errorElement.classList.remove('d-none');
+        }
+    });
+}
+
+// Xử lý form xác nhận đặt lại mật khẩu
+const resetConfirmForm = document.getElementById('reset-confirm-form');
+if (resetConfirmForm) {
+    resetConfirmForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const token = document.getElementById('reset-token').value;
+        const password = document.getElementById('new-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        const errorElement = document.getElementById('reset-confirm-error');
+        const successElement = document.getElementById('reset-confirm-success');
+        
+        // Ẩn thông báo lỗi và thành công trước khi gửi yêu cầu
+        errorElement.classList.add('d-none');
+        successElement.classList.add('d-none');
+        
+        // Kiểm tra mật khẩu xác nhận
+        if (password !== confirmPassword) {
+            errorElement.textContent = 'Mật khẩu xác nhận không khớp';
+            errorElement.classList.remove('d-none');
+            return;
+        }
+        
+        // Lấy email từ localStorage
+        const email = localStorage.getItem('resetEmail');
+        if (!email) {
+            errorElement.textContent = 'Không tìm thấy thông tin email. Vui lòng thử lại từ đầu.';
+            errorElement.classList.remove('d-none');
+            return;
+        }
+        
+        try {
+            const response = await fetch('/api/auth/reset-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, token, password })
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.message || 'Không thể đặt lại mật khẩu');
+            }
+            
+            // Hiển thị thông báo thành công
+            successElement.textContent = 'Đặt lại mật khẩu thành công!';
+            successElement.classList.remove('d-none');
+            
+            // Xóa email từ localStorage
+            localStorage.removeItem('resetEmail');
+            
+            // Chuyển hướng đến trang đăng nhập sau 2 giây
+            setTimeout(() => {
+                window.location.href = '/login.html';
+            }, 2000);
+            
+        } catch (error) {
+            errorElement.textContent = error.message;
+            errorElement.classList.remove('d-none');
+        }
+    });
 }

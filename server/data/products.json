@@ -1,4 +1,3 @@
- 
 [
   {
     "id": "1",
@@ -134,5 +133,14 @@
     "image": "/images/BandichuotRazerGigantusV2.jpg",
     "category": "accessory",
     "createdAt": "2023-05-05T10:15:00.000Z"
+  },
+  {
+    "id": "1743858137257",
+    "name": "CPU",
+    "description": "CPU chip i9 ",
+    "price": 7000000,
+    "image": "blob:http://localhost:3002/30f5b340-f192-4a70-9a11-96f842f32590",
+    "category": "component",
+    "createdAt": "2025-04-05T13:02:17.257Z"
   }
 ]
