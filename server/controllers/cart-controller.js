@@ -257,3 +257,56 @@ exports.getOrder = (req, res) => {
     res.status(500).json({ message: 'Lỗi khi lấy thông tin đơn hàng', error: error.message });
   }
 };
+
+// Lấy lịch sử đơn hàng của người dùng
+exports.getUserOrders = (req, res) => {
+  try {
+    const { userId } = req.params;
+    const ordersFile = path.join(__dirname, '../data/orders.json');
+
+    // Đọc file orders.json
+    if (!fs.existsSync(ordersFile)) {
+      return res.status(200).json([]);
+    }
+
+    const orders = JSON.parse(fs.readFileSync(ordersFile, 'utf8'));
+    
+    // Lọc đơn hàng theo userId
+    const userOrders = orders.filter(order => order.userId === userId);
+
+    res.status(200).json(userOrders);
+  } catch (error) {
+    res.status(500).json({ message: 'Lỗi khi lấy lịch sử đơn hàng', error: error.message });
+  }
+};
+
+// Cập nhật userId cho đơn hàng
+exports.updateOrderUserId = (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { userId } = req.body;
+    const ordersFile = path.join(__dirname, '../data/orders.json');
+
+    // Đọc file orders.json
+    if (!fs.existsSync(ordersFile)) {
+      return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+    }
+
+    const orders = JSON.parse(fs.readFileSync(ordersFile, 'utf8'));
+    const orderIndex = orders.findIndex(order => order.orderId === orderId);
+
+    if (orderIndex === -1) {
+      return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+    }
+
+    // Cập nhật userId cho đơn hàng
+    orders[orderIndex].userId = userId;
+
+    // Lưu lại vào file
+    fs.writeFileSync(ordersFile, JSON.stringify(orders, null, 2), 'utf8');
+
+    res.status(200).json({ message: 'Đã cập nhật userId cho đơn hàng' });
+  } catch (error) {
+    res.status(500).json({ message: 'Lỗi khi cập nhật userId cho đơn hàng', error: error.message });
+  }
+};

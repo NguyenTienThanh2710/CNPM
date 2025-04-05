@@ -37,11 +37,22 @@ function checkLoginStatus() {
             const userDropdown = document.getElementById('user-dropdown');
             if (userDropdown) {
                 userDropdown.querySelector('.dropdown-menu').innerHTML = `
-                    <li><a class="dropdown-item" href="/account.html">Tài khoản của tôi</a></li>
-                    <li><a class="dropdown-item" href="/orders.html">Đơn hàng</a></li>
+                    <li><a class="dropdown-item" id="account-link" href="/account.html">Tài khoản của tôi</a></li>
+                    <li><a class="dropdown-item" href="/order-history.html">Lịch sử đơn hàng</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#" onclick="logout()">Đăng xuất</a></li>
                 `;
+                
+                // Thêm sự kiện click cho liên kết tài khoản
+                setTimeout(() => {
+                    const accountLink = document.getElementById('account-link');
+                    if (accountLink) {
+                        accountLink.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            window.location.href = '/account.html';
+                        });
+                    }
+                }, 200);
                 
                 // Thay đổi icon và thêm tên người dùng
                 userDropdown.querySelector('.nav-link').innerHTML = `

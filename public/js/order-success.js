@@ -7,8 +7,53 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    displayOrderDetails(JSON.parse(orderInfo));
+    // Lấy thông tin người dùng hiện tại
+    const user = getCurrentUser();
+    
+    // Hiển thị thông tin đơn hàng
+    const orderData = JSON.parse(orderInfo);
+    displayOrderDetails(orderData);
+    
+    // Cập nhật userId trong đơn hàng nếu người dùng đã đăng nhập
+    if (user) {
+        updateOrderUserId(orderData.orderId, user.id);
+    }
 });
+
+// Lấy thông tin người dùng từ localStorage
+function getCurrentUser() {
+    const userJson = localStorage.getItem('user');
+    if (!userJson) return null;
+    
+    try {
+        return JSON.parse(userJson);
+    } catch (error) {
+        console.error('Lỗi khi phân tích dữ liệu người dùng:', error);
+        return null;
+    }
+}
+
+// Cập nhật userId trong đơn hàng
+async function updateOrderUserId(orderId, userId) {
+    try {
+        const response = await fetch(`/api/cart/orders/${orderId}/update-user`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+            },
+            body: JSON.stringify({ userId })
+        });
+
+        if (!response.ok) {
+            throw new Error('Không thể cập nhật thông tin người dùng cho đơn hàng');
+        }
+
+        console.log('Đã cập nhật userId cho đơn hàng:', orderId);
+    } catch (error) {
+        console.error('Lỗi khi cập nhật userId cho đơn hàng:', error);
+    }
+}
 
 
 

@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Kiểm tra trạng thái đăng nhập và cập nhật giao diện
+    updateUserInterface();
+    
     // Xử lý form đăng nhập
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
@@ -155,22 +158,88 @@ async function checkAdminAccess() {
 
 // Hiển thị thông báo
 function showAlert(message, type = 'info') {
-    const alertBox = document.createElement('div');
-    alertBox.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 end-0 m-3`;
-    alertBox.setAttribute('role', 'alert');
-    alertBox.innerHTML = `
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
+    alertDiv.setAttribute('role', 'alert');
+    alertDiv.innerHTML = `
         ${message}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     `;
-    document.body.appendChild(alertBox);
+    document.body.appendChild(alertDiv);
     
-    // Tự động ẩn thông báo sau 3 giây
+    // Tự động đóng thông báo sau 3 giây
     setTimeout(() => {
-        alertBox.classList.remove('show');
-        setTimeout(() => {
-            alertBox.remove();
-        }, 300);
+        alertDiv.remove();
     }, 3000);
+}
+
+// Cập nhật giao diện người dùng dựa trên trạng thái đăng nhập
+function updateUserInterface() {
+    const userDropdown = document.getElementById('user-dropdown');
+    if (!userDropdown) return;
+    
+    const dropdownToggle = userDropdown.querySelector('.dropdown-toggle');
+    const dropdownMenu = userDropdown.querySelector('.dropdown-menu');
+    
+    // Kiểm tra trạng thái đăng nhập
+    const userJson = localStorage.getItem('user');
+    
+    if (userJson) {
+        try {
+            const user = JSON.parse(userJson);
+            
+            // Cập nhật icon và tên người dùng
+            dropdownToggle.innerHTML = `
+                <i class="bi bi-person-circle"></i> ${user.username || 'Tài khoản'}
+            `;
+            
+            // Cập nhật menu dropdown
+            dropdownMenu.innerHTML = `
+                <li><a class="dropdown-item" href="/profile.html">Tài khoản của tôi</a></li>
+                <li><a class="dropdown-item" href="/order-history.html" id="order-history-link">Lịch sử đơn hàng</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" id="logout-button">Đăng xuất</a></li>
+            `;
+            
+            // Thêm sự kiện đăng xuất
+            const logoutButton = document.getElementById('logout-button');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    handleLogout();
+                });
+            }
+            
+            // Thêm sự kiện cho liên kết lịch sử đơn hàng
+            const orderHistoryLink = document.getElementById('order-history-link');
+            if (orderHistoryLink) {
+                orderHistoryLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = '/order-history.html';
+                });
+            }
+            
+        } catch (error) {
+            console.error('Lỗi khi phân tích dữ liệu người dùng:', error);
+        }
+    } else {
+        // Người dùng chưa đăng nhập
+        dropdownMenu.innerHTML = `
+            <li><a class="dropdown-item" href="/login.html">Đăng nhập</a></li>
+            <li><a class="dropdown-item" href="/register.html">Đăng ký</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/order-history.html" id="guest-order-history-link">Lịch sử đơn hàng</a></li>
+        `;
+        
+        // Thêm sự kiện cho liên kết lịch sử đơn hàng của khách
+        const guestOrderHistoryLink = document.getElementById('guest-order-history-link');
+        if (guestOrderHistoryLink) {
+            guestOrderHistoryLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = '/order-history.html';
+            });
+        }
+    }
 }
 
 // Xử lý form yêu cầu đặt lại mật khẩu
@@ -220,6 +289,30 @@ if (resetRequestForm) {
             errorElement.classList.remove('d-none');
         }
     });
+}
+
+// Xử lý đăng xuất
+function handleLogout() {
+    try {
+        // Xóa thông tin người dùng khỏi localStorage
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        
+        // Hiển thị thông báo thành công
+        showAlert('Đăng xuất thành công!', 'success');
+        
+        // Chuyển hướng về trang chủ
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 1500);
+    } catch (error) {
+        console.error('Lỗi khi đăng xuất:', error);
+        
+        // Trong trường hợp lỗi, vẫn xóa thông tin người dùng và chuyển hướng
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        window.location.href = '/';
+    }
 }
 
 // Xử lý form xác nhận đặt lại mật khẩu

@@ -23,4 +23,10 @@ router.post('/orders', cartController.createOrder);
 // API lấy thông tin đơn hàng
 router.get('/orders/:orderId', cartController.getOrder);
 
+// API lấy lịch sử đơn hàng của người dùng
+router.get('/orders/user/:userId', cartController.getUserOrders);
+
+// API cập nhật userId cho đơn hàng
+router.put('/orders/:orderId/update-user', cartController.updateOrderUserId);
+
 module.exports = router;
