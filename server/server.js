@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const PORT = process.env.PORT || (process.argv[2] === '--port' ? parseInt(process.argv[3]) : 3001);
+const PORT = process.env.PORT || (process.argv[2] === '--port' ? parseInt(process.argv[3]) : 3002);
 
 // Middleware để xử lý JSON và form data
 app.use(express.json());

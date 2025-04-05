@@ -225,6 +225,16 @@ function displayProductDetails(product) {
         const quantity = parseInt(document.getElementById('quantity').value);
         addToCart(product.id, quantity);
     });
+    
+    // Thiết lập sự kiện cho nút "Mua ngay"
+    document.getElementById('buy-now-btn').addEventListener('click', function() {
+        const quantity = parseInt(document.getElementById('quantity').value);
+        addToCart(product.id, quantity);
+        // Chuyển hướng đến trang thanh toán
+        setTimeout(() => {
+            window.location.href = '/checkout.html';
+        }, 500);
+    });
 }
 
 // Tăng số lượng sản phẩm

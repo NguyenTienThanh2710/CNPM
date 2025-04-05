@@ -27,7 +27,7 @@
                     <button id="add-to-cart-btn" class="btn btn-primary">
                         <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
                     </button>
-                    <button class="btn btn-success">
+                    <button id="buy-now-btn" class="btn btn-success">
                         <i class="bi bi-lightning-fill"></i> Mua ngay
                     </button>
                 </div>
@@ -89,9 +89,11 @@
     <div id="footer-container"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/components.js"></script>
     <script src="/js/products-api.js"></script>
     <script src="/js/cart.js"></script>
+    <script src="/js/product-detail.js"></script>
     <script>
         // JavaScript để tải thông tin chi tiết sản phẩm
         document.addEventListener('DOMContentLoaded', function() {
