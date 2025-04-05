@@ -13,33 +13,33 @@
                         <a class="nav-link" href="/">Trang chủ</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Danh mục sản phẩm">
                             Sản phẩm
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Laptop</a></li>
-                            <li><a class="dropdown-item" href="#">PC & Máy tính</a></li>
-                            <li><a class="dropdown-item" href="#">Linh kiện máy tính</a></li>
-                            <li><a class="dropdown-item" href="#">Màn hình</a></li>
-                            <li><a class="dropdown-item" href="#">Gaming Gear</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="productDropdown">
+                            <li><a class="dropdown-item" href="/search.html?category=laptop">Laptop</a></li>
+                            <li><a class="dropdown-item" href="/search.html?category=pc">PC & Máy tính</a></li>
+                            <li><a class="dropdown-item" href="/search.html?category=components">Linh kiện máy tính</a></li>
+                            <li><a class="dropdown-item" href="/search.html?category=monitor">Màn hình</a></li>
+                            <li><a class="dropdown-item" href="/search.html?category=gaming">Gaming Gear</a></li>
                             <li><a class="dropdown-item" href="#">Thiết bị mạng</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Tất cả sản phẩm</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#promotions">Khuyến mãi</a>
+                        <a class="nav-link" href="#">Khuyến mãi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Tin tức</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#footer">Liên hệ</a>
+                        <a class="nav-link" href="#">Liên hệ</a>
                     </li>
                 </ul>
-                <form class="d-flex me-3">
+                <form class="d-flex me-3" id="search-form" onsubmit="handleSearch(event)">
                     <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Tìm kiếm..." aria-label="Search">
+                        <input class="form-control" type="search" name="q" placeholder="Tìm kiếm..." aria-label="Search">
                         <button class="btn btn-outline-light" type="submit">
                             <i class="bi bi-search"></i>
                         </button>

@@ -1,8 +1,47 @@
 // Hiển thị giỏ hàng trên trang giỏ hàng
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Kiểm tra xem đang ở trang giỏ hàng không
     if (window.location.pathname.includes('/cart.html') || window.location.pathname.endsWith('/cart')) {
         displayCart();
+        
+        // Thêm sự kiện cho nút thanh toán
+        const checkoutBtn = document.getElementById('checkout-btn');
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                
+                // Kiểm tra trạng thái đăng nhập
+                const isAuthenticated = await checkAuthStatus();
+                if (!isAuthenticated) {
+                    // Lưu giỏ hàng hiện tại vào localStorage với key riêng
+                    const currentCart = localStorage.getItem('cart');
+                    if (currentCart) {
+                        localStorage.setItem('guest_cart', currentCart);
+                    }
+                    
+                    // Lưu URL hiện tại để sau khi đăng nhập có thể quay lại
+                    localStorage.setItem('redirectUrl', '/checkout.html');
+                    
+                    // Hiển thị thông báo yêu cầu đăng nhập
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Vui lòng đăng nhập',
+                        text: 'Bạn cần đăng nhập để tiếp tục thanh toán',
+                        confirmButtonText: 'Đăng nhập ngay',
+                        showCancelButton: true,
+                        cancelButtonText: 'Để sau'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/login.html';
+                        }
+                    });
+                    return;
+                }
+                
+                // Nếu đã đăng nhập, chuyển đến trang thanh toán
+                window.location.href = '/checkout.html';
+            });
+        }
     }
 });
 

@@ -1,0 +1,254 @@
+[
+    {
+      "orderId": "ORD1743834303212",
+      "orderDate": "2025-04-05T06:25:03.212Z",
+      "customerInfo": {
+        "fullName": "Trần Thái Minh Huy",
+        "phone": "0333755315",
+        "email": "minhhuy5929@gmail.com",
+        "address": "Ấp 1 xã Thạnh Hoà",
+        "province": "24",
+        "district": "219",
+        "ward": "7582"
+      },
+      "paymentMethod": "cod",
+      "cart": {
+        "items": [
+          {
+            "id": "1743829426414",
+            "productId": "2",
+            "name": "Chuột gaming Logitech G502 HERO",
+            "price": 1790000,
+            "image": "/images/mouse-g502.jpg",
+            "quantity": 1
+          },
+          {
+            "id": "1743829471431",
+            "productId": "1",
+            "name": "Laptop Gaming Acer Nitro 5",
+            "price": 22990000,
+            "image": "/images/laptop-nitro-5.jpg",
+            "quantity": 1
+          },
+          {
+            "id": "1743833179010",
+            "productId": "14",
+            "name": "Màn hình Dell UltraSharp U2720Q",
+            "price": 12990000,
+            "image": "/images/ManhinhDellUltraSharpU2720Q.jpg",
+            "quantity": 1
+          }
+        ],
+        "total": 37770000
+      },
+      "shippingFee": 0,
+      "status": "pending",
+      "userId": "guest"
+    },
+    {
+      "orderId": "ORD1743834386619",
+      "orderDate": "2025-04-05T06:26:26.619Z",
+      "customerInfo": {
+        "fullName": "Trần Thái Minh Huy",
+        "phone": "0333755315",
+        "email": "minhhuy5929@gmail.com",
+        "address": "Ấp 1 xã Thạnh Hoà",
+        "province": "26",
+        "district": "244",
+        "ward": "8737"
+      },
+      "paymentMethod": "cod",
+      "cart": {
+        "items": [
+          {
+            "id": "1743834373503",
+            "productId": "1",
+            "name": "Laptop Gaming Acer Nitro 5",
+            "price": 22990000,
+            "image": "/images/laptop-nitro-5.jpg",
+            "quantity": 1
+          },
+          {
+            "id": "1743834373912",
+            "productId": "2",
+            "name": "Chuột gaming Logitech G502 HERO",
+            "price": 1790000,
+            "image": "/images/mouse-g502.jpg",
+            "quantity": 1
+          },
+          {
+            "id": "1743834374778",
+            "productId": "3",
+            "name": "Bàn phím cơ Keychron K2",
+            "price": 2190000,
+            "image": "/images/keyboard-keychron.jpg",
+            "quantity": 1
+          },
+          {
+            "id": "1743834376045",
+            "productId": "4",
+            "name": "Laptop Dell XPS 13",
+            "price": 32990000,
+            "image": "/images/LaptopDellXPS13.png",
+            "quantity": 1
+          }
+        ],
+        "total": 59960000
+      },
+      "shippingFee": 0,
+      "status": "pending",
+      "userId": "guest"
+    },
+    {
+      "orderId": "ORD1743834675205",
+      "orderDate": "2025-04-05T06:31:15.205Z",
+      "customerInfo": {
+        "fullName": "Trần Thái Minh Huy",
+        "phone": "0333755315",
+        "email": "minhhuy5929@gmail.com",
+        "address": "Ấp 1 xã Thạnh Hoà",
+        "province": "25",
+        "district": "237",
+        "ward": "8527"
+      },
+      "paymentMethod": "cod",
+      "cart": {
+        "items": [
+          {
+            "id": "1743834659070",
+            "productId": "1",
+            "name": "Laptop Gaming Acer Nitro 5",
+            "price": 22990000,
+            "image": "/images/laptop-nitro-5.jpg",
+            "quantity": 1
+          },
+          {
+            "id": "1743834659559",
+            "productId": "2",
+            "name": "Chuột gaming Logitech G502 HERO",
+            "price": 1790000,
+            "image": "/images/mouse-g502.jpg",
+            "quantity": 1
+          },
+          {
+            "id": "1743834659985",
+            "productId": "3",
+            "name": "Bàn phím cơ Keychron K2",
+            "price": 2190000,
+            "image": "/images/keyboard-keychron.jpg",
+            "quantity": 1
+          }
+        ],
+        "total": 26970000
+      },
+      "shippingFee": 0,
+      "status": "pending",
+      "userId": "guest"
+    },
+    {
+      "orderId": "ORD1743834787101",
+      "orderDate": "2025-04-05T06:33:07.101Z",
+      "customerInfo": {
+        "fullName": "Trần Thái Minh Huy",
+        "phone": "0333755315",
+        "email": "minhhuy5929@gmail.com",
+        "address": "Ấp 1 xã Thạnh Hoà",
+        "province": "25",
+        "district": "238",
+        "ward": "8638"
+      },
+      "paymentMethod": "cod",
+      "cart": {
+        "items": [
+          {
+            "id": "1743834775390",
+            "productId": "4",
+            "name": "Laptop Dell XPS 13",
+            "price": 32990000,
+            "image": "/images/LaptopDellXPS13.png",
+            "quantity": 1
+          },
+          {
+            "id": "1743834775794",
+            "productId": "5",
+            "name": "Màn hình gaming LG UltraGear 27GN950",
+            "price": 18990000,
+            "image": "/images/LGUltraGear27GN950.jpg",
+            "quantity": 1
+          }
+        ],
+        "total": 51980000
+      },
+      "shippingFee": 0,
+      "status": "pending",
+      "userId": "guest"
+    },
+    {
+      "orderId": "ORD1743834864833",
+      "orderDate": "2025-04-05T06:34:24.833Z",
+      "customerInfo": {
+        "fullName": "Trần Thái Minh Huy",
+        "phone": "0333755315",
+        "email": "minhhuy5929@gmail.com",
+        "address": "Ấp 1 xã Thạnh Hoà",
+        "province": "17",
+        "district": "150",
+        "ward": "4834"
+      },
+      "paymentMethod": "cod",
+      "cart": {
+        "items": [
+          {
+            "id": "1743834852742",
+            "productId": "1",
+            "name": "Laptop Gaming Acer Nitro 5",
+            "price": 22990000,
+            "image": "/images/laptop-nitro-5.jpg",
+            "quantity": 1
+          },
+          {
+            "id": "1743834853102",
+            "productId": "2",
+            "name": "Chuột gaming Logitech G502 HERO",
+            "price": 1790000,
+            "image": "/images/mouse-g502.jpg",
+            "quantity": 1
+          }
+        ],
+        "total": 24780000
+      },
+      "shippingFee": 0,
+      "status": "pending",
+      "userId": "guest"
+    },
+    {
+      "orderId": "ORD1743834890978",
+      "orderDate": "2025-04-05T06:34:50.978Z",
+      "customerInfo": {
+        "fullName": "Trần Thái Minh Huy",
+        "phone": "0333755315",
+        "email": "minhhuy5929@gmail.com",
+        "address": "Ấp 1 xã Thạnh Hoà",
+        "province": "15",
+        "district": "132",
+        "ward": "4255"
+      },
+      "paymentMethod": "cod",
+      "cart": {
+        "items": [
+          {
+            "id": "1743834877909",
+            "productId": "1",
+            "name": "Laptop Gaming Acer Nitro 5",
+            "price": 22990000,
+            "image": "/images/laptop-nitro-5.jpg",
+            "quantity": 1
+          }
+        ],
+        "total": 22990000
+      },
+      "shippingFee": 0,
+      "status": "pending",
+      "userId": "guest"
+    }
+  ]

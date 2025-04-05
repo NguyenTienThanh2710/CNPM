@@ -168,16 +168,92 @@ exports.clearCart = (req, res) => {
     const userId = req.headers['user-id'] || 'guest';
     const carts = getCarts();
     
-    if (!carts[userId]) {
-      return res.status(404).json({ message: 'Không tìm thấy giỏ hàng' });
+    // Xóa giỏ hàng của người dùng
+    if (carts[userId]) {
+      carts[userId] = { items: [], total: 0 };
+      saveCarts(carts);
     }
     
-    // Làm trống giỏ hàng
-    carts[userId] = { items: [], total: 0 };
-    saveCarts(carts);
-    
-    res.status(200).json(carts[userId]);
+    res.status(200).json({ message: 'Đã xóa giỏ hàng' });
   } catch (error) {
-    res.status(500).json({ message: 'Lỗi khi xóa toàn bộ giỏ hàng', error: error.message });
+    res.status(500).json({ message: 'Lỗi khi xóa giỏ hàng', error: error.message });
+  }
+};
+
+// Tạo đơn hàng mới
+exports.createOrder = (req, res) => {
+  try {
+    const { customerInfo, paymentMethod, cart, shippingFee } = req.body;
+    const userId = req.headers['user-id'] || 'guest';
+
+    // Validate dữ liệu đầu vào
+    if (!customerInfo || !paymentMethod || !cart || cart.items.length === 0) {
+      return res.status(400).json({ message: 'Dữ liệu đơn hàng không hợp lệ' });
+    }
+
+    // Tạo mã đơn hàng
+    const orderId = `ORD${Date.now()}`;
+
+    // Tạo đơn hàng mới
+    const order = {
+      orderId,
+      orderDate: new Date(),
+      customerInfo,
+      paymentMethod,
+      cart,
+      shippingFee,
+      status: 'pending',
+      userId
+    };
+
+    // Lưu đơn hàng vào file
+    const ordersFile = path.join(__dirname, '../data/orders.json');
+    let orders = [];
+
+    try {
+      if (fs.existsSync(ordersFile)) {
+        orders = JSON.parse(fs.readFileSync(ordersFile, 'utf8'));
+      }
+    } catch (error) {
+      console.error('Lỗi khi đọc file orders.json:', error);
+    }
+
+    orders.push(order);
+    fs.writeFileSync(ordersFile, JSON.stringify(orders, null, 2), 'utf8');
+
+    // Xóa giỏ hàng sau khi đặt hàng thành công
+    const carts = getCarts();
+    if (carts[userId]) {
+      carts[userId] = { items: [], total: 0 };
+      saveCarts(carts);
+    }
+
+    res.status(201).json({ orderId: order.orderId });
+  } catch (error) {
+    res.status(500).json({ message: 'Lỗi khi tạo đơn hàng', error: error.message });
+  }
+};
+
+// Lấy thông tin đơn hàng
+exports.getOrder = (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const ordersFile = path.join(__dirname, '../data/orders.json');
+
+    // Đọc file orders.json
+    if (!fs.existsSync(ordersFile)) {
+      return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+    }
+
+    const orders = JSON.parse(fs.readFileSync(ordersFile, 'utf8'));
+    const order = orders.find(order => order.orderId === orderId);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+    }
+
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({ message: 'Lỗi khi lấy thông tin đơn hàng', error: error.message });
   }
 };

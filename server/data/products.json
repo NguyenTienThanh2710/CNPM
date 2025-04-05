@@ -1,30 +1,138 @@
  
 [
-    {
-      "id": "1",
-      "name": "Laptop Gaming Acer Nitro 5",
-      "description": "Laptop gaming hiệu năng cao với GPU NVIDIA GTX 1650",
-      "price": 22990000,
-      "image": "/images/laptop-nitro-5.jpg",
-      "category": "laptop",
-      "createdAt": "2023-01-15T14:30:00.000Z"
-    },
-    {
-      "id": "2",
-      "name": "Chuột gaming Logitech G502 HERO",
-      "description": "Chuột gaming cao cấp với cảm biến HERO 25K",
-      "price": 1790000,
-      "image": "/images/mouse-g502.jpg",
-      "category": "mouse",
-      "createdAt": "2023-01-20T09:15:00.000Z"
-    },
-    {
-      "id": "3",
-      "name": "Bàn phím cơ Keychron K2",
-      "description": "Bàn phím cơ với kết nối Bluetooth 5.1",
-      "price": 2190000,
-      "image": "/images/keyboard-keychron.jpg",
-      "category": "keyboard",
-      "createdAt": "2023-01-25T11:45:00.000Z"
-    }
-  ]
+  {
+    "id": "1",
+    "name": "Laptop Gaming Acer Nitro 5",
+    "description": "Laptop gaming hiệu năng cao với GPU NVIDIA GTX 1650",
+    "price": 22990000,
+    "image": "/images/laptop-nitro-5.jpg",
+    "category": "laptop",
+    "createdAt": "2023-01-15T14:30:00.000Z"
+  },
+  {
+    "id": "2",
+    "name": "Chuột gaming Logitech G502 HERO",
+    "description": "Chuột gaming cao cấp với cảm biến HERO 25K",
+    "price": 1790000,
+    "image": "/images/mouse-g502.jpg",
+    "category": "mouse",
+    "createdAt": "2023-01-20T09:15:00.000Z"
+  },
+  {
+    "id": "3",
+    "name": "Bàn phím cơ Keychron K2",
+    "description": "Bàn phím cơ với kết nối Bluetooth 5.1",
+    "price": 2190000,
+    "image": "/images/keyboard-keychron.jpg",
+    "category": "keyboard",
+    "createdAt": "2023-01-25T11:45:00.000Z"
+  },
+  {
+    "id": "4",
+    "name": "Laptop Dell XPS 13",
+    "description": "Laptop mỏng nhẹ cao cấp với màn hình InfinityEdge, chip Intel Core i7 thế hệ 11",
+    "price": 32990000,
+    "image": "/images/LaptopDellXPS13.png",
+    "category": "laptop",
+    "createdAt": "2023-02-10T10:30:00.000Z"
+  },
+  {
+    "id": "5",
+    "name": "Màn hình gaming LG UltraGear 27GN950",
+    "description": "Màn hình gaming 4K 144Hz với công nghệ Nano IPS và hỗ trợ NVIDIA G-Sync",
+    "price": 18990000,
+    "image": "/images/LGUltraGear27GN950.jpg",
+    "category": "monitor",
+    "createdAt": "2023-02-15T14:45:00.000Z"
+  },
+  {
+    "id": "6",
+    "name": "PC Gaming MSI MEG Aegis Ti5",
+    "description": "Máy tính để bàn gaming cao cấp với RTX 3080 và Intel Core i9",
+    "price": 85990000,
+    "image": "/images/PCGamingMSIMEGAegisTi5.jpg",
+    "category": "desktop",
+    "createdAt": "2023-02-20T09:15:00.000Z"
+  },
+  {
+    "id": "7",
+    "name": "Tai nghe SteelSeries Arctis Pro",
+    "description": "Tai nghe gaming cao cấp với âm thanh Hi-Res và DAC chuyên dụng",
+    "price": 4590000,
+    "image": "/images/TaingheSteelSeriesArctisPro.jpg",
+    "category": "headphone",
+    "createdAt": "2023-03-05T11:30:00.000Z"
+  },
+  {
+    "id": "8",
+    "name": "Card đồ họa NVIDIA RTX 3070",
+    "description": "Card đồ họa hiệu năng cao với 8GB GDDR6 và hỗ trợ Ray Tracing",
+    "price": 16990000,
+    "image": "/images/CardDoHoaNVIDIARTX3070.jpg",
+    "category": "component",
+    "createdAt": "2023-03-10T13:45:00.000Z"
+  },
+  {
+    "id": "9",
+    "name": "Bàn phím cơ Corsair K95 RGB Platinum",
+    "description": "Bàn phím cơ cao cấp với switch Cherry MX và đèn nền RGB",
+    "price": 4290000,
+    "image": "/images/BanphimcoCorsairK95RGBPlatinum.png",
+    "category": "keyboard",
+    "createdAt": "2023-03-15T10:20:00.000Z"
+  },
+  {
+    "id": "10",
+    "name": "Laptop ASUS ROG Zephyrus G14",
+    "description": "Laptop gaming mỏng nhẹ với AMD Ryzen 9 và RTX 3060",
+    "price": 35990000,
+    "image": "/images/LaptopASUSROGZephyrusG14.jpg",
+    "category": "laptop",
+    "createdAt": "2023-03-20T15:10:00.000Z"
+  },
+  {
+    "id": "11",
+    "name": "Ổ cứng SSD Samsung 970 EVO Plus 1TB",
+    "description": "Ổ cứng SSD NVMe với tốc độ đọc/ghi lên đến 3500/3300 MB/s",
+    "price": 3290000,
+    "image": "/images/ocungSSDSamsung970EVOPlus1TB.jpg",
+    "category": "storage",
+    "createdAt": "2023-04-05T09:30:00.000Z"
+  },
+  {
+    "id": "12",
+    "name": "Chuột không dây Logitech MX Master 3",
+    "description": "Chuột không dây cao cấp với cảm biến Darkfield và cuộn siêu nhanh",
+    "price": 2490000,
+    "image": "/images/ChuotkhongdayLogitechMXMaster3.jpg",
+    "category": "mouse",
+    "createdAt": "2023-04-10T14:20:00.000Z"
+  },
+  {
+    "id": "13",
+    "name": "Bộ nhớ RAM Corsair Vengeance RGB Pro 32GB",
+    "description": "Bộ nhớ DDR4 3600MHz với đèn RGB và tản nhiệt nhôm",
+    "price": 3890000,
+    "image": "/images/BonhoRAMCorsairVengeanceRGBPro32GB.jpg",
+    "category": "component",
+    "createdAt": "2023-04-15T11:45:00.000Z"
+  },
+  {
+    "id": "14",
+    "name": "Màn hình Dell UltraSharp U2720Q",
+    "description": "Màn hình 4K IPS 27 inch với độ phủ màu 95% DCI-P3",
+    "price": 12990000,
+    "image": "/images/ManhinhDellUltraSharpU2720Q.jpg",
+    "category": "monitor",
+    "createdAt": "2023-04-20T16:30:00.000Z"
+  },
+  {
+    "id": "15",
+    "name": "Bàn di chuột Razer Gigantus V2",
+    "description": "Bàn di chuột gaming cỡ lớn với bề mặt vải dệt mịn",
+    "price": 590000,
+    "image": "/images/BandichuotRazerGigantusV2.jpg",
+    "category": "accessory",
+    "createdAt": "2023-05-05T10:15:00.000Z"
+  }
+]

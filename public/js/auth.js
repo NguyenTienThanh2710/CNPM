@@ -27,12 +27,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('user', JSON.stringify(data.user));
                 localStorage.setItem('token', data.token || 'demo-token');
                 
+                // Khôi phục giỏ hàng của khách nếu có
+                const guestCart = localStorage.getItem('guest_cart');
+                if (guestCart) {
+                    localStorage.setItem('cart', guestCart);
+                    localStorage.removeItem('guest_cart');
+                }
+                
                 // Hiển thị thông báo thành công
                 showAlert('Đăng nhập thành công!', 'success');
                 
-                // Chuyển hướng về trang chủ
+                // Chuyển hướng đến trang đã lưu hoặc trang chủ
                 setTimeout(() => {
-                    window.location.href = '/';
+                    const redirectUrl = localStorage.getItem('redirectUrl') || '/';
+                    localStorage.removeItem('redirectUrl');
+                    window.location.href = redirectUrl;
                 }, 1500);
                 
             } catch (error) {

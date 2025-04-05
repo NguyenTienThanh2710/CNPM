@@ -17,4 +17,10 @@ router.delete('/remove/:id', cartController.removeFromCart);
 // Xóa toàn bộ giỏ hàng
 router.delete('/clear', cartController.clearCart);
 
+// API đặt hàng
+router.post('/orders', cartController.createOrder);
+
+// API lấy thông tin đơn hàng
+router.get('/orders/:orderId', cartController.getOrder);
+
 module.exports = router;

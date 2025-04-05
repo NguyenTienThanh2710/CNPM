@@ -1,0 +1,58 @@
+.card-body {
+    padding: 1.25rem;
+}
+
+#order-items {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#order-items .img-thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item-details {
+    display: flex;
+    align-items: center;
+}
+
+.order-item-info {
+    margin-left: 1rem;
+}
+
+.order-item-price {
+    text-align: right;
+}
+
+.checkout-summary {
+    margin-top: 1.5rem;
+}
+
+.checkout-summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.checkout-total {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid #dee2e6;
+}
