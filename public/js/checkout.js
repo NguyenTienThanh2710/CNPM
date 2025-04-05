@@ -208,8 +208,8 @@ function setupCheckoutForm() {
         e.preventDefault();
         e.stopPropagation(); // Ngăn chặn sự kiện submit lan truyền
 
-        // Kiểm tra các trường bắt buộc
-        const requiredFields = ['fullName', 'phone', 'email', 'address', 'province', 'district', 'ward'];
+        // Kiểm tra các trường bắt buộc - chỉ kiểm tra các trường thực sự có trong form
+        const requiredFields = ['fullName', 'phone', 'email', 'address'];
         const emptyFields = requiredFields.filter(field => !document.getElementById(field).value.trim());
 
         if (emptyFields.length > 0) {
@@ -252,15 +252,86 @@ function setupCheckoutForm() {
 }
 
 // Xử lý thanh toán
-function processPayment() {
-    // Bạn có thể thay đổi logic xử lý thanh toán theo yêu cầu của mình
-    Swal.fire({
-        icon: 'success',
-        title: 'Đơn hàng đã được thanh toán',
-        text: 'Cảm ơn bạn đã mua sắm!',
-        confirmButtonText: 'OK'
-    }).then(() => {
-        window.location.href = '/thank-you.html'; // Điều hướng đến trang cảm ơn
-    });
+async function processPayment() {
+    try {
+        // Hiển thị loading
+        Swal.fire({
+            title: 'Đang xử lý đơn hàng',
+            text: 'Vui lòng đợi trong giây lát...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        // Lấy thông tin khách hàng từ form
+        const customerInfo = {
+            fullName: document.getElementById('fullName').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            address: document.getElementById('address').value.trim()
+        };
+
+        // Lấy phương thức thanh toán
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+        // Lấy thông tin giỏ hàng từ localStorage
+        let cartData = localStorage.getItem('cart');
+        if (!cartData) {
+            cartData = localStorage.getItem('guest_cart');
+        }
+        const cart = JSON.parse(cartData);
+
+        // Tính phí vận chuyển
+        const shippingFee = 30000; // Phí vận chuyển cố định
+
+        // Tạo đối tượng đơn hàng
+        const orderData = {
+            customerInfo,
+            paymentMethod,
+            cart,
+            shippingFee
+        };
+
+        // Gửi request đến API để tạo đơn hàng
+        const response = await fetch('/api/cart/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'user-id': JSON.parse(localStorage.getItem('user')).id || 'guest'
+            },
+            body: JSON.stringify(orderData)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || 'Có lỗi xảy ra khi đặt hàng');
+        }
+
+        // Xóa giỏ hàng sau khi đặt hàng thành công
+        localStorage.removeItem('cart');
+        localStorage.removeItem('guest_cart');
+
+        // Hiển thị thông báo thành công
+        Swal.fire({
+            icon: 'success',
+            title: 'Đặt hàng thành công',
+            text: `Mã đơn hàng của bạn là: ${result.orderId}`,
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = `/order-success.html?orderId=${result.orderId}`;
+        });
+
+    } catch (error) {
+        console.error('Lỗi khi đặt hàng:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Đặt hàng thất bại',
+            text: error.message || 'Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại sau.',
+            confirmButtonText: 'OK'
+        });
+    }
 }
 

@@ -250,5 +250,39 @@
     "shippingFee": 0,
     "status": "pending",
     "userId": "guest"
+  },
+  {
+    "orderId": "ORD1743855619993",
+    "orderDate": "2025-04-05T12:20:19.993Z",
+    "customerInfo": {
+      "fullName": "Trần Thái Minh Huy",
+      "phone": "0333755315",
+      "email": "minhhuy5929@gmail.com",
+      "address": "Ấp 1 xã Thạnh Hoà"
+    },
+    "paymentMethod": "cod",
+    "cart": {
+      "items": [
+        {
+          "id": "1",
+          "name": "Laptop Gaming Acer Nitro 5",
+          "price": 22990000,
+          "image": "/images/laptop-nitro-5.jpg",
+          "quantity": 1
+        },
+        {
+          "id": "1743854573641",
+          "productId": "5",
+          "name": "Màn hình gaming LG UltraGear 27GN950",
+          "price": 18990000,
+          "image": "/images/LGUltraGear27GN950.jpg",
+          "quantity": 1
+        }
+      ],
+      "total": 41980000
+    },
+    "shippingFee": 30000,
+    "status": "pending",
+    "userId": "1743829450453"
   }
 ]
