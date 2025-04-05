@@ -1,0 +1,1 @@
+// Cấu hình chung cho ứng dụng

@@ -63,7 +63,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Hiển thị thông tin đơn hàng
     displayOrderSummary();
     setupCheckoutForm();
-    initializeAddressSelects(); // Khởi tạo các dropdown địa chỉ
 });
 
 // Hiển thị thông tin đơn hàng
@@ -265,7 +264,3 @@ function processPayment() {
     });
 }
 
-// Hàm khởi tạo các dropdown địa chỉ
-function initializeAddressSelects() {
-    // Thêm mã khởi tạo địa chỉ vào đây nếu cần
-}
