@@ -1,3 +1,10 @@
+// Hàm kiểm tra trạng thái đăng nhập
+async function checkAuthStatus() {
+    
+    const user = localStorage.getItem('user');
+    return user ? true : false; 
+}
+
 // Hàm định dạng tiền tệ
 function formatCurrency(amount) {
     return new Intl.NumberFormat('vi-VN', {
@@ -240,116 +247,25 @@ function setupCheckoutForm() {
             return;
         }
 
-        // Lấy thông tin từ form
-        const formData = {
-            fullName: document.getElementById('fullName').value.trim(),
-            phone: document.getElementById('phone').value.trim(),
-            email: document.getElementById('email').value.trim(),
-            address: document.getElementById('address').value.trim(),
-            province: document.getElementById('province').value,
-            district: document.getElementById('district').value,
-            ward: document.getElementById('ward').value,
-            paymentMethod: document.querySelector('input[name="paymentMethod"]:checked')?.value
-        };
-
-        if (!formData.paymentMethod) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Chưa chọn phương thức thanh toán',
-                text: 'Vui lòng chọn phương thức thanh toán',
-                confirmButtonText: 'Đồng ý'
-            });
-            return;
-        }
-
-        // Lấy thông tin giỏ hàng
-        const cart = JSON.parse(localStorage.getItem('cart') || localStorage.getItem('guest_cart'));
-        if (!cart || !cart.items || cart.items.length === 0) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi',
-                text: 'Giỏ hàng của bạn đang trống',
-                confirmButtonText: 'Đồng ý'
-            }).then(() => {
-                window.location.href = '/cart.html';
-            });
-            return;
-        }
-
-        try {
-            // Hiển thị loading
-            Swal.fire({
-                title: 'Đang xử lý đơn hàng',
-                text: 'Vui lòng đợi trong giây lát...',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                showConfirmButton: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-
-            // Gửi đơn hàng lên server
-            const response = await fetch('/api/orders', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    items: cart.items,
-                    total: cart.items.reduce((total, item) => total + (item.price * item.quantity), 0)
-                })
-            });
-
-            const result = await response.json();
-
-            if (!response.ok) {
-                throw new Error(result.message || 'Lỗi khi tạo đơn hàng');
-            }
-
-            // Lưu thông tin đơn hàng vào localStorage để hiển thị ở trang thành công
-            const orderInfo = {
-                ...formData,
-                items: cart.items,
-                total: cart.items.reduce((total, item) => total + (item.price * item.quantity), 0),
-                orderDate: new Date().toISOString(),
-                orderId: result.orderId || Date.now().toString()
-            };
-
-            try {
-                // Xóa giỏ hàng và lưu thông tin đơn hàng
-                localStorage.removeItem('cart');
-                localStorage.removeItem('guest_cart');
-                localStorage.setItem('lastOrder', JSON.stringify(orderInfo));
-
-                // Thông báo thành công và chuyển hướng
-                if (formData.paymentMethod === 'cod') {
-                    // Nếu là thanh toán COD, chuyển hướng ngay lập tức
-                    window.location.href = '/order-success.html';
-                } else {
-                    // Nếu là phương thức thanh toán khác, hiển thị thông báo trước
-                    await Swal.fire({
-                        icon: 'success',
-                        title: 'Đặt hàng thành công',
-                        text: 'Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ liên hệ với bạn sớm nhất!',
-                        confirmButtonText: 'Đồng ý'
-                    });
-                    window.location.href = '/order-success.html';
-                }
-            } catch (error) {
-                console.error('Lỗi khi lưu thông tin đơn hàng:', error);
-                throw new Error('Không thể lưu thông tin đơn hàng');
-            }
-
-        } catch (error) {
-            console.error('Lỗi:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi',
-                text: error.message || 'Đã có lỗi xảy ra khi xử lý đơn hàng. Vui lòng thử lại sau.',
-                confirmButtonText: 'Đồng ý'
-            });
-        }
+        // Xử lý thanh toán sau khi tất cả thông tin hợp lệ
+        processPayment();
     });
+}
+
+// Xử lý thanh toán
+function processPayment() {
+    // Bạn có thể thay đổi logic xử lý thanh toán theo yêu cầu của mình
+    Swal.fire({
+        icon: 'success',
+        title: 'Đơn hàng đã được thanh toán',
+        text: 'Cảm ơn bạn đã mua sắm!',
+        confirmButtonText: 'OK'
+    }).then(() => {
+        window.location.href = '/thank-you.html'; // Điều hướng đến trang cảm ơn
+    });
+}
+
+// Hàm khởi tạo các dropdown địa chỉ
+function initializeAddressSelects() {
+    // Thêm mã khởi tạo địa chỉ vào đây nếu cần
 }

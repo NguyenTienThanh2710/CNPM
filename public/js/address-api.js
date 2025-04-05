@@ -1,6 +1,3 @@
-// Sử dụng API từ https://provinces.open-api.vn/
-const API_BASE_URL = 'https://provinces.open-api.vn/api';
-
 // Lấy danh sách tỉnh/thành phố
 async function getProvinces() {
     try {
@@ -9,6 +6,7 @@ async function getProvinces() {
         return await response.json();
     } catch (error) {
         console.error('Lỗi khi lấy danh sách tỉnh/thành phố:', error);
+        alert('Có lỗi xảy ra khi lấy danh sách tỉnh/thành phố. Vui lòng thử lại.');
         return [];
     }
 }
@@ -22,6 +20,7 @@ async function getDistricts(provinceCode) {
         return data.districts || [];
     } catch (error) {
         console.error('Lỗi khi lấy danh sách quận/huyện:', error);
+        alert('Có lỗi xảy ra khi lấy danh sách quận/huyện. Vui lòng thử lại.');
         return [];
     }
 }
@@ -35,6 +34,7 @@ async function getWards(districtCode) {
         return data.wards || [];
     } catch (error) {
         console.error('Lỗi khi lấy danh sách phường/xã:', error);
+        alert('Có lỗi xảy ra khi lấy danh sách phường/xã. Vui lòng thử lại.');
         return [];
     }
 }

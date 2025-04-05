@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Hiển thị thông tin chi tiết đơn hàng
 function displayOrderDetails(order) {
+
     // Hiển thị mã đơn hàng và thời gian
     document.getElementById('orderId').textContent = order.orderId;
     document.getElementById('orderDate').textContent = new Date(order.orderDate).toLocaleString('vi-VN');
@@ -49,6 +50,8 @@ function displayOrderDetails(order) {
     orderDetails.innerHTML = detailsHTML;
 
     // Cập nhật tổng tiền
+    console.log('Subtotal:', subtotal); // Để debug
+    console.log('Shipping Fee:', shippingFee); // Để debug
     document.getElementById('order-subtotal').textContent = formatCurrency(subtotal);
     document.getElementById('order-shipping').textContent = formatCurrency(shippingFee);
     document.getElementById('order-total').textContent = formatCurrency(subtotal + shippingFee);
