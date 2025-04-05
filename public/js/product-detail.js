@@ -79,8 +79,13 @@ async function buyNow(productId) {
         // Thêm sản phẩm vào giỏ hàng trước
         await addToCartFromDetail(productId);
 
-        // Kiểm tra trạng thái đăng nhập
-        const response = await fetch('/api/auth/check');
+        // Kiểm tra trạng thái đăng nhập bằng token trong localStorage
+        const token = localStorage.getItem('token');
+        const response = await fetch('/api/auth/check', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         const authData = await response.json();
 
         if (!authData.isAuthenticated) {
